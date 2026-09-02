@@ -1,0 +1,133 @@
+-- 100 original JavaScript fundamentals questions in a fixed learning order.
+-- Run after setup.sql. Re-running this file updates existing positions safely.
+
+insert into public.questions
+  (position, category, prompt, code_snippet, options, correct_option, explanation)
+values
+  (1, 'Variables & values', 'Which keyword declares a block-scoped variable that can be reassigned?', null, jsonb_build_array('let', 'const', 'static', 'final'), 0, '`let` is block-scoped and permits reassignment. `const` is block-scoped but cannot be reassigned.'),
+  (2, 'Variables & values', 'Which keyword should you prefer when a variable will not be reassigned?', null, jsonb_build_array('var', 'let', 'const', 'fixed'), 2, '`const` prevents reassignment of the binding and clearly communicates intent.'),
+  (3, 'Variables & values', 'What is the value of an uninitialized `let` variable after its declaration?', 'let score;\nconsole.log(score);', jsonb_build_array('null', 'undefined', '0', 'An error'), 1, 'A declared variable without an assigned value contains `undefined`.'),
+  (4, 'Variables & values', 'Which identifier is valid in JavaScript?', null, jsonb_build_array('2ndPlace', 'user-name', 'user_name', 'const'), 2, 'Identifiers may contain underscores. They cannot begin with a number, contain hyphens, or use reserved words.'),
+  (5, 'Variables & values', 'What happens when this code runs?', 'const language = "JS";\nlanguage = "Dart";', jsonb_build_array('language becomes Dart', 'language becomes undefined', 'A TypeError is thrown', 'Nothing happens'), 2, 'A `const` binding cannot be reassigned, so reassignment throws a TypeError.'),
+  (6, 'Variables & values', 'What is the recommended naming style for ordinary JavaScript variables?', null, jsonb_build_array('snake_case', 'camelCase', 'PascalCase', 'kebab-case'), 1, 'JavaScript conventions use camelCase for variables and functions.'),
+  (7, 'Variables & values', 'What does `null` usually represent?', null, jsonb_build_array('A deliberate absence of value', 'A missing declaration', 'The number zero', 'An empty string only'), 0, '`null` is commonly assigned deliberately to represent no value.'),
+  (8, 'Variables & values', 'Which value is a JavaScript boolean?', null, jsonb_build_array('"true"', '1', 'true', 'yes'), 2, '`true` without quotes is the boolean value. `"true"` is a string.'),
+  (9, 'Variables & values', 'What will be logged?', 'let count = 2;\ncount += 3;\nconsole.log(count);', jsonb_build_array('2', '3', '5', '23'), 2, '`+=` adds the right-hand value and assigns the result, producing 5.'),
+  (10, 'Variables & values', 'Which statement about `const` objects is correct?', 'const user = { name: "Mona" };', jsonb_build_array('Their properties can never change', 'Their properties may change, but the variable cannot be reassigned', 'They become strings', 'They are deeply frozen'), 1, '`const` protects the binding, not the contents of the referenced object.'),
+
+  (11, 'Types & operators', 'What does this expression return?', 'typeof "JavaScript"', jsonb_build_array('text', 'String', 'string', 'object'), 2, '`typeof` returns the lowercase string `"string"` for text values.'),
+  (12, 'Types & operators', 'What is the result of `2 + "3"`?', null, jsonb_build_array('5', '23', 'NaN', 'An error'), 1, 'When one operand is a string, `+` performs string concatenation and returns `"23"`.'),
+  (13, 'Types & operators', 'Which comparison checks value and type without coercion?', null, jsonb_build_array('=', '==', '===', '!==='), 2, 'Strict equality `===` compares both type and value without converting operands.'),
+  (14, 'Types & operators', 'What is the result of `5 === "5"`?', null, jsonb_build_array('true', 'false', '5', 'undefined'), 1, 'The values have different types, so strict equality returns false.'),
+  (15, 'Types & operators', 'Which operator returns the remainder after division?', null, jsonb_build_array('/', '%', '**', '//'), 1, 'The remainder, or modulo, operator is `%`.'),
+  (16, 'Types & operators', 'What is the result of `2 ** 3`?', null, jsonb_build_array('5', '6', '8', '9'), 2, '`**` is exponentiation: 2 raised to the power of 3 equals 8.'),
+  (17, 'Types & operators', 'Which one is a falsy value?', null, jsonb_build_array('"0"', '[]', '{}', '0'), 3, 'The number 0 is falsy. Non-empty strings, arrays, and objects are truthy.'),
+  (18, 'Types & operators', 'What does `Boolean("")` return?', null, jsonb_build_array('true', 'false', 'undefined', 'An empty string'), 1, 'An empty string is falsy, so converting it to boolean returns false.'),
+  (19, 'Types & operators', 'What is the result of `Number("42")`?', null, jsonb_build_array('"42"', '42', 'NaN', 'undefined'), 1, '`Number` converts the numeric string into the number 42.'),
+  (20, 'Types & operators', 'Which operator means logical AND?', null, jsonb_build_array('||', '&&', '!', '??'), 1, '`&&` is logical AND and requires both conditions to be truthy.'),
+
+  (21, 'Control flow', 'Which statement runs code only when a condition is truthy?', null, jsonb_build_array('if', 'import', 'return', 'class'), 0, 'An `if` statement conditionally executes its block.'),
+  (22, 'Control flow', 'What will this code log?', 'const age = 18;\nif (age >= 18) console.log("adult");\nelse console.log("minor");', jsonb_build_array('adult', 'minor', 'true', 'Nothing'), 0, '18 is greater than or equal to 18, so the first branch runs.'),
+  (23, 'Control flow', 'Which operator is used in the conditional (ternary) expression?', null, jsonb_build_array('?:', '=>', '::', '??='), 0, 'A ternary uses `condition ? valueIfTrue : valueIfFalse`.'),
+  (24, 'Control flow', 'What does `break` do inside a loop?', null, jsonb_build_array('Skips one iteration', 'Ends the loop immediately', 'Restarts the loop', 'Pauses for one second'), 1, '`break` exits the nearest loop or switch immediately.'),
+  (25, 'Control flow', 'What does `continue` do inside a loop?', null, jsonb_build_array('Ends the program', 'Exits the loop', 'Skips to the next iteration', 'Repeats the current iteration'), 2, '`continue` skips the remaining statements in the current iteration.'),
+  (26, 'Control flow', 'How many times does this loop run?', 'for (let i = 0; i < 3; i++) {\n  console.log(i);\n}', jsonb_build_array('2', '3', '4', 'Forever'), 1, 'The values are 0, 1, and 2, so the loop runs three times.'),
+  (27, 'Control flow', 'Which loop is designed to iterate over iterable values such as arrays?', null, jsonb_build_array('for...of', 'for...in', 'switch', 'if...else'), 0, '`for...of` iterates over the values produced by an iterable.'),
+  (28, 'Control flow', 'What is a `switch` statement useful for?', null, jsonb_build_array('Declaring variables', 'Choosing among several matching cases', 'Creating promises', 'Importing modules'), 1, '`switch` selects one of several branches based on a matching value.'),
+  (29, 'Control flow', 'What does the nullish coalescing operator return?', 'null ?? "fallback"', jsonb_build_array('null', 'undefined', 'fallback', 'false'), 2, '`??` uses the right side when the left side is null or undefined.'),
+  (30, 'Control flow', 'When does a `while` loop continue running?', null, jsonb_build_array('While its condition is truthy', 'Exactly ten times', 'Until it finds a return', 'Only when an array is present'), 0, 'A `while` loop evaluates its condition before each iteration and continues while it is truthy.'),
+
+  (31, 'Functions & scope', 'What is the main purpose of a function?', null, jsonb_build_array('Store CSS', 'Group reusable behavior', 'Create an HTML file', 'Install packages'), 1, 'Functions package behavior so it can be named, reused, and tested.'),
+  (32, 'Functions & scope', 'What value is returned?', 'function add(a, b) {\n  return a + b;\n}\nadd(2, 4);', jsonb_build_array('2', '4', '6', 'undefined'), 2, 'The function returns the sum of its two arguments: 6.'),
+  (33, 'Functions & scope', 'What is `name` in this declaration?', 'function greet(name) {\n  return `Hello ${name}`;\n}', jsonb_build_array('An argument', 'A parameter', 'A property', 'A module'), 1, 'A parameter is the named input in a function declaration. The supplied value is an argument.'),
+  (34, 'Functions & scope', 'Which arrow function doubles a number using an implicit return?', null, jsonb_build_array('n => n * 2', 'n -> n * 2', 'function => n * 2', 'n : n * 2'), 0, 'An expression-bodied arrow function returns its expression automatically.'),
+  (35, 'Functions & scope', 'What does a function return when it has no `return` statement?', null, jsonb_build_array('null', '0', 'false', 'undefined'), 3, 'Functions return `undefined` by default.'),
+  (36, 'Functions & scope', 'Where can a variable declared with `let` inside a block be used?', null, jsonb_build_array('Everywhere', 'Only inside that block and its nested blocks', 'Only in HTML', 'Only in another file'), 1, '`let` has block scope.'),
+  (37, 'Functions & scope', 'What is a closure?', null, jsonb_build_array('A function remembering variables from its outer scope', 'A closed browser tab', 'A frozen object', 'A completed loop'), 0, 'A closure lets a function retain access to its surrounding lexical scope.'),
+  (38, 'Functions & scope', 'What will this log?', 'const greet = (name = "friend") => `Hi, ${name}`;\nconsole.log(greet());', jsonb_build_array('Hi, undefined', 'Hi, friend', 'friend', 'An error'), 1, 'The default parameter is used because no argument was provided.'),
+  (39, 'Functions & scope', 'What does the rest parameter collect?', 'function total(...numbers) {}', jsonb_build_array('One string', 'Remaining arguments in an array', 'Object properties only', 'Errors'), 1, 'A rest parameter gathers remaining arguments into a real array.'),
+  (40, 'Functions & scope', 'Which statement about function declarations is true?', null, jsonb_build_array('They can be called before their declaration in the same scope', 'They cannot accept parameters', 'They always return strings', 'They only run once'), 0, 'Function declarations are hoisted, so their binding is available earlier in the scope.'),
+
+  (41, 'Arrays', 'Which syntax creates an array?', null, jsonb_build_array('{1, 2, 3}', '[1, 2, 3]', '(1, 2, 3)', '<1, 2, 3>'), 1, 'Array literals use square brackets.'),
+  (42, 'Arrays', 'What is the first valid index of an array?', null, jsonb_build_array('-1', '0', '1', 'first'), 1, 'JavaScript arrays are zero-indexed.'),
+  (43, 'Arrays', 'What does `push` do?', null, jsonb_build_array('Adds an item to the end', 'Removes the first item', 'Sorts the array', 'Copies an object'), 0, '`push` appends one or more items and returns the new length.'),
+  (44, 'Arrays', 'What does `pop` return?', null, jsonb_build_array('The first item', 'The removed last item', 'A new array', 'The array length only'), 1, '`pop` removes and returns the last array element.'),
+  (45, 'Arrays', 'Which method creates a new array by transforming every element?', null, jsonb_build_array('map', 'find', 'some', 'push'), 0, '`map` calls a function for every element and returns the transformed results.'),
+  (46, 'Arrays', 'Which method keeps only elements that match a condition?', null, jsonb_build_array('reduce', 'filter', 'join', 'reverse'), 1, '`filter` returns a new array containing matching elements.'),
+  (47, 'Arrays', 'What will this return?', '[2, 4, 6].find((number) => number > 3)', jsonb_build_array('2', '4', '[4, 6]', 'true'), 1, '`find` returns the first element that satisfies the condition, which is 4.'),
+  (48, 'Arrays', 'What does `includes` return?', null, jsonb_build_array('A boolean indicating whether a value exists', 'The last element', 'A sorted copy', 'The array index always'), 0, '`includes` returns true or false depending on whether the value is present.'),
+  (49, 'Arrays', 'Which method can combine an array into one value?', null, jsonb_build_array('reduce', 'slice', 'concat', 'shift'), 0, '`reduce` accumulates array elements into a single result.'),
+  (50, 'Arrays', 'What does array destructuring do here?', 'const [first, second] = ["a", "b"];', jsonb_build_array('Creates an object', 'Assigns a and b by position', 'Deletes the array', 'Sorts the values'), 1, 'Array destructuring assigns values according to their positions.'),
+
+  (51, 'Objects', 'Which syntax creates an object property named `theme`?', null, jsonb_build_array('{ theme: "dark" }', '[ theme = "dark" ]', '( theme: "dark" )', '<theme>dark</theme>'), 0, 'Object literals use braces and key-value pairs separated by a colon.'),
+  (52, 'Objects', 'How do you read the `name` property with dot notation?', null, jsonb_build_array('user->name', 'user:name', 'user.name', 'user(name)'), 2, 'Dot notation reads a named property as `object.property`.'),
+  (53, 'Objects', 'When is bracket notation especially useful?', null, jsonb_build_array('When a property name is stored in a variable', 'Only for numbers', 'Only inside classes', 'When declaring HTML'), 0, 'Bracket notation can evaluate a variable or expression to find the property name.'),
+  (54, 'Objects', 'What does this produce?', 'const user = { name: "Lina", age: 25 };\nObject.keys(user);', jsonb_build_array('["Lina", 25]', '["name", "age"]', '{name, age}', '2'), 1, '`Object.keys` returns an array of the object’s own enumerable property names.'),
+  (55, 'Objects', 'What is a method?', null, jsonb_build_array('A function stored as an object property', 'A CSS class', 'An array index', 'A package manager'), 0, 'A method is a function associated with an object through a property.'),
+  (56, 'Objects', 'What does optional chaining prevent here?', 'user.address?.city', jsonb_build_array('All syntax errors', 'An error when address is null or undefined', 'The city from changing', 'Object creation'), 1, '`?.` stops and returns undefined when the preceding value is nullish.'),
+  (57, 'Objects', 'What does the object spread create?', 'const copy = { ...original };', jsonb_build_array('A shallow copy', 'A deep frozen copy', 'A string', 'The same variable binding'), 0, 'Object spread copies top-level enumerable properties into a new object.'),
+  (58, 'Objects', 'What does this destructuring statement assign to `title`?', 'const { title } = { title: "Quiz", score: 90 };', jsonb_build_array('90', 'Quiz', 'title', 'undefined'), 1, 'Object destructuring selects the property with the matching key.'),
+  (59, 'Objects', 'Which value can be used as a normal object key?', null, jsonb_build_array('Strings and symbols', 'Functions only', 'Arrays only', 'Booleans only'), 0, 'Ordinary object property keys are strings or symbols; other values are converted to strings.'),
+  (60, 'Objects', 'What does `JSON.stringify` usually return?', null, jsonb_build_array('A JavaScript object', 'A JSON-formatted string', 'An HTML element', 'A promise'), 1, '`JSON.stringify` serializes a supported JavaScript value into JSON text.'),
+
+  (61, 'DOM & events', 'What does DOM stand for?', null, jsonb_build_array('Data Object Method', 'Document Object Model', 'Dynamic Output Module', 'Document Order Map'), 1, 'The Document Object Model represents a web document as objects JavaScript can interact with.'),
+  (62, 'DOM & events', 'Which method selects the first element matching a CSS selector?', null, jsonb_build_array('document.querySelector', 'document.push', 'window.filter', 'console.select'), 0, '`document.querySelector` returns the first matching element or null.'),
+  (63, 'DOM & events', 'Which method selects an element by its `id`?', null, jsonb_build_array('getElementById', 'findById', 'selectId', 'queryIdOnly'), 0, '`document.getElementById` finds the element with that exact ID.'),
+  (64, 'DOM & events', 'What does `textContent` control?', null, jsonb_build_array('An element’s text', 'The browser URL', 'A package version', 'An array length'), 0, '`textContent` reads or replaces the text contained by a node.'),
+  (65, 'DOM & events', 'How do you listen for a button click in browser JavaScript?', null, jsonb_build_array('button.addEventListener("click", handler)', 'button.listen(handler)', 'click => button', 'button.on("press") only'), 0, '`addEventListener` registers a callback for the named browser event.'),
+  (66, 'DOM & events', 'What is the event object?', null, jsonb_build_array('Information about the event that occurred', 'A database table', 'A CSS variable', 'A Node package'), 0, 'The browser passes an event object containing details such as target and event type.'),
+  (67, 'DOM & events', 'What does `event.preventDefault()` do?', null, jsonb_build_array('Stops the browser’s default action', 'Deletes the event', 'Refreshes the page', 'Removes every listener'), 0, 'It prevents the default browser behavior, such as form navigation.'),
+  (68, 'DOM & events', 'Which property usually identifies the element that initiated an event?', null, jsonb_build_array('event.target', 'event.page', 'event.name', 'event.sourceCode'), 0, '`event.target` is the original node on which the event occurred.'),
+  (69, 'DOM & events', 'What is event bubbling?', null, jsonb_build_array('An event moving from the target up through ancestors', 'An animation API', 'A network request', 'A syntax error'), 0, 'Most events bubble upward from the target through parent elements.'),
+  (70, 'DOM & events', 'In React, which prop handles a click?', null, jsonb_build_array('onClick', 'onclick()', 'clickHandlerOnly', 'onPress'), 0, 'React uses the camel-cased `onClick` prop and receives a function value.'),
+
+  (71, 'Async JavaScript', 'What does asynchronous code allow?', null, jsonb_build_array('Waiting work without blocking all other work', 'Only mathematical operations', 'CSS compilation', 'Variables without names'), 0, 'Asynchronous operations can complete later while the program remains responsive.'),
+  (72, 'Async JavaScript', 'What are the three common Promise states?', null, jsonb_build_array('new, old, deleted', 'pending, fulfilled, rejected', 'start, pause, stop', 'true, false, null'), 1, 'A Promise begins pending and settles as either fulfilled or rejected.'),
+  (73, 'Async JavaScript', 'What does `await` do inside an async function?', null, jsonb_build_array('Pauses that function until a Promise settles', 'Freezes the browser', 'Creates an array', 'Imports CSS'), 0, '`await` suspends the surrounding async function, not the entire JavaScript runtime.'),
+  (74, 'Async JavaScript', 'What does an `async` function always return?', null, jsonb_build_array('A Promise', 'A string', 'undefined only', 'An HTML element'), 0, 'An async function wraps its returned value in a Promise.'),
+  (75, 'Async JavaScript', 'Which method begins an HTTP request in modern browser JavaScript?', null, jsonb_build_array('fetch', 'query', 'downloadOnly', 'http.getElement'), 0, '`fetch` starts a request and returns a Promise for the response.'),
+  (76, 'Async JavaScript', 'What must you often call to read a JSON response body?', 'const response = await fetch(url);', jsonb_build_array('await response.json()', 'response.object', 'JSON.fetch(response)', 'response.body.textOnly'), 0, '`response.json()` asynchronously parses the response body as JSON.'),
+  (77, 'Async JavaScript', 'Does `fetch` reject automatically for every HTTP 404 response?', null, jsonb_build_array('Yes', 'No, check response.ok or status', 'Only in React', 'Only on mobile'), 1, '`fetch` resolves for HTTP error statuses; inspect `response.ok` or `response.status`.'),
+  (78, 'Async JavaScript', 'Which block handles a rejected awaited Promise?', null, jsonb_build_array('catch', 'switch', 'finally only', 'case'), 0, 'Use `try...catch` around awaited operations to handle rejections.'),
+  (79, 'Async JavaScript', 'What does `Promise.all` do?', null, jsonb_build_array('Waits for multiple Promises and rejects if one rejects', 'Runs one loop forever', 'Converts values to strings', 'Retries every request'), 0, '`Promise.all` fulfills with all results after every input fulfills, or rejects on the first rejection.'),
+  (80, 'Async JavaScript', 'What schedules a callback after a minimum delay?', null, jsonb_build_array('setTimeout', 'setValue', 'waitFor', 'delayPromiseOnly'), 0, '`setTimeout` queues a callback after at least the requested delay.'),
+
+  (81, 'Modern JavaScript & modules', 'What does `export` do in a JavaScript module?', null, jsonb_build_array('Makes a value available to other modules', 'Prints a value', 'Uploads a file', 'Closes the browser'), 0, '`export` exposes selected bindings for other modules to import.'),
+  (82, 'Modern JavaScript & modules', 'How do you import a default export named `App`?', null, jsonb_build_array('import App from "./App.js"', 'include App "./App.js"', 'require default as App only', 'export App from "./App.js"'), 0, 'Default imports use `import LocalName from "module"`.'),
+  (83, 'Modern JavaScript & modules', 'How do you import a named export called `sum`?', null, jsonb_build_array('import sum from "./math.js" always', 'import { sum } from "./math.js"', 'include { sum }', 'using sum from math'), 1, 'Named imports use braces and must match the exported name unless aliased.'),
+  (84, 'Modern JavaScript & modules', 'What does template-literal interpolation use?', null, jsonb_build_array('${expression}', '#{expression}', '<expression>', '%expression%'), 0, 'Inside backticks, `${...}` evaluates and inserts an expression.'),
+  (85, 'Modern JavaScript & modules', 'What is the result?', 'const name = "Sam";\n`Hello, ${name}!`', jsonb_build_array('Hello, name!', 'Hello, Sam!', 'Hello, ${name}!', 'An error'), 1, 'The template literal evaluates the variable and inserts `Sam`.'),
+  (86, 'Modern JavaScript & modules', 'What does the spread syntax do here?', 'const all = [...first, ...second];', jsonb_build_array('Combines array elements into a new array', 'Creates a Promise', 'Deletes both arrays', 'Sorts both arrays'), 0, 'Array spread expands iterable elements into the new array literal.'),
+  (87, 'Modern JavaScript & modules', 'What is a `Set` useful for?', null, jsonb_build_array('Storing unique values', 'Rendering HTML only', 'Creating CSS rules', 'Making duplicate keys'), 0, 'A Set collection stores each value at most once.'),
+  (88, 'Modern JavaScript & modules', 'What advantage does a `Map` provide?', null, jsonb_build_array('Keys can be values of any type', 'It only stores strings', 'It compiles JSX', 'It automatically fetches data'), 0, 'Unlike ordinary object keys, Map keys may be objects, functions, or other value types.'),
+  (89, 'Modern JavaScript & modules', 'What does `Array.from` commonly do?', null, jsonb_build_array('Creates an array from an iterable or array-like value', 'Freezes an array', 'Returns the last item', 'Creates a database'), 0, '`Array.from` builds a new array from iterable or array-like input.'),
+  (90, 'Modern JavaScript & modules', 'What is the purpose of `import.meta.env` in Vite?', null, jsonb_build_array('Access build-time environment values exposed by Vite', 'Read every operating-system secret', 'Replace React state', 'Create database tables'), 0, 'Vite exposes permitted build-time values through `import.meta.env`; `VITE_` values are visible in the browser.'),
+
+  (91, 'Errors & core concepts', 'Which statement deliberately throws an error?', null, jsonb_build_array('throw new Error("message")', 'return Error', 'break Error', 'console.error only'), 0, '`throw` interrupts normal flow with the supplied error value.'),
+  (92, 'Errors & core concepts', 'What is the purpose of `finally`?', null, jsonb_build_array('Run cleanup whether an error occurred or not', 'Create a final variable', 'Stop all functions', 'Handle only syntax errors'), 0, 'A `finally` block runs after try/catch regardless of the outcome.'),
+  (93, 'Errors & core concepts', 'What kind of error is a missing closing parenthesis?', null, jsonb_build_array('SyntaxError', 'RangeError only', 'NetworkError', 'DatabaseError'), 0, 'Invalid JavaScript grammar produces a SyntaxError before that code can execute.'),
+  (94, 'Errors & core concepts', 'What does `console.error` do?', null, jsonb_build_array('Reports an error message without automatically throwing', 'Always stops the program', 'Deletes the console', 'Fixes the error'), 0, '`console.error` writes an error-level message; execution normally continues.'),
+  (95, 'Errors & core concepts', 'What does `NaN` mean?', null, jsonb_build_array('Not a Number', 'No assigned Name', 'New async Node', 'Null and Negative'), 0, '`NaN` is the special numeric value meaning Not-a-Number.'),
+  (96, 'Errors & core concepts', 'What is the reliable way to test for NaN?', null, jsonb_build_array('value === NaN', 'Number.isNaN(value)', 'value == "NaN"', 'typeof value === "NaN"'), 1, '`Number.isNaN` checks specifically for the NaN numeric value; NaN is not equal to itself.'),
+  (97, 'Errors & core concepts', 'What is mutation?', null, jsonb_build_array('Changing an existing value or object', 'Importing a module', 'Catching an error', 'Declaring a function only'), 0, 'Mutation changes existing state instead of producing a separate value.'),
+  (98, 'Errors & core concepts', 'Why are stable keys important when rendering React lists?', null, jsonb_build_array('They help React match items between renders', 'They encrypt the list', 'They sort every list', 'They replace component props'), 0, 'Stable keys let React preserve the correct element/component identity across updates.'),
+  (99, 'Errors & core concepts', 'What does immutability usually mean in React state updates?', null, jsonb_build_array('Create a new array or object instead of changing the existing state value', 'Never use variables', 'Make all code synchronous', 'Store everything globally'), 0, 'New references make state changes predictable and detectable by React.'),
+  (100, 'Errors & core concepts', 'Which statement best describes JavaScript in a React application?', null, jsonb_build_array('React replaces JavaScript completely', 'React components use JavaScript to describe and update UI', 'JavaScript is used only for CSS', 'Browsers run JSX directly without transformation'), 1, 'React is a JavaScript library. Components use JavaScript and JSX, which Vite transforms into browser-ready code.')
+on conflict (position) do update set
+  category = excluded.category,
+  prompt = excluded.prompt,
+  code_snippet = excluded.code_snippet,
+  options = excluded.options,
+  correct_option = excluded.correct_option,
+  explanation = excluded.explanation;
+
+do $$
+declare
+  question_count integer;
+begin
+  select count(*) into question_count from public.questions;
+  if question_count <> 100 then
+    raise exception 'Expected 100 questions after seeding, found %', question_count;
+  end if;
+end;
+$$;

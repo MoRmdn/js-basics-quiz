@@ -1,0 +1,32 @@
+export const demoQuestions = [
+  {
+    id: 1,
+    position: 1,
+    category: 'Variables & values',
+    prompt: 'Which keyword declares a block-scoped variable that can be reassigned?',
+    code_snippet: null,
+    options: ['let', 'const', 'static', 'final'],
+    correctOption: 0,
+    explanation: '`let` is block-scoped and permits reassignment. `const` is block-scoped but cannot be reassigned.',
+  },
+  {
+    id: 2,
+    position: 2,
+    category: 'Types & operators',
+    prompt: 'What does this expression return?',
+    code_snippet: "typeof 'JavaScript'",
+    options: ['text', 'String', 'string', 'object'],
+    correctOption: 2,
+    explanation: 'The `typeof` operator returns lowercase type names, so a text value returns `"string"`.',
+  },
+  {
+    id: 3,
+    position: 3,
+    category: 'Functions',
+    prompt: 'What value is returned by this function call?',
+    code_snippet: 'const double = (number) => number * 2\ndouble(6)',
+    options: ['6', '8', '12', 'undefined'],
+    correctOption: 2,
+    explanation: 'An arrow function without braces returns its expression implicitly. Six multiplied by two is twelve.',
+  },
+]
