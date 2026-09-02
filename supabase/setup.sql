@@ -94,7 +94,7 @@ create policy "Users can read their answers"
 create or replace function public.get_quiz_questions()
 returns table (
   id bigint,
-  position smallint,
+  "position" smallint,
   category text,
   prompt text,
   code_snippet text,
