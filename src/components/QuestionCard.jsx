@@ -1,11 +1,18 @@
 const letters = ['A', 'B', 'C', 'D']
 
-export function QuestionCard({ question, selectedOption, feedback, onSelect }) {
+export function QuestionCard({
+  question,
+  questionNumber = question.position,
+  questionTotal,
+  selectedOption,
+  feedback,
+  onSelect,
+}) {
   return (
     <article className="question-card">
       <div className="question-meta">
         <span className="category-pill">{question.category}</span>
-        <span>Question {question.position}</span>
+        <span>Question {questionNumber}{questionTotal ? ` of ${questionTotal}` : ''}</span>
       </div>
 
       <h1>{question.prompt}</h1>

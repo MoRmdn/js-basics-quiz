@@ -1,6 +1,6 @@
 # JS Quest
 
-A learning-focused React application with a 100-question JavaScript fundamentals quiz, immediate explanations, saved progress, pass/fail results, and unlimited attempt history.
+A learning-focused React application with a 100-question JavaScript fundamentals quiz divided into five guided chapters. It includes immediate explanations, chapter celebrations, saved progress, pass/fail results, and unlimited attempt history.
 
 The app is deliberately written in plain JavaScript so a Flutter developer can learn React concepts before migrating to TypeScript. When Supabase is not configured, it runs as a fully interactive three-question browser demo.
 
@@ -60,7 +60,7 @@ Supabase hosts Auth, Postgres, and the Data API. Vercel hosts the React files.
 src/
 ├── components/     Reusable UI pieces (like small Flutter widgets)
 ├── context/        Shared session state (similar to Provider)
-├── data/           Three-question offline demo data
+├── data/           Chapter configuration and offline demo data
 ├── hooks/          Reusable React behavior
 ├── lib/            Supabase client initialization
 ├── pages/          Route-level screens

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { AppShell } from './components/AppShell.jsx'
 import { ProtectedRoute } from './components/ProtectedRoute.jsx'
+import { ChapterCompletePage } from './pages/ChapterCompletePage.jsx'
 import { DashboardPage } from './pages/DashboardPage.jsx'
 import { NamePage } from './pages/NamePage.jsx'
 import { NotFoundPage } from './pages/NotFoundPage.jsx'
@@ -20,6 +21,8 @@ export default function App() {
         <Route index element={<NamePage />} />
         <Route path="dashboard" element={protect(<DashboardPage />)} />
         <Route path="quiz/:attemptId" element={protect(<QuizPage />)} />
+        <Route path="quiz/:attemptId/chapter/:chapterNumber" element={protect(<QuizPage />)} />
+        <Route path="quiz/:attemptId/chapter/:chapterNumber/complete" element={protect(<ChapterCompletePage />)} />
         <Route path="result/:attemptId" element={protect(<ResultPage />)} />
         <Route path="home" element={<Navigate to="/dashboard" replace />} />
         <Route path="*" element={<NotFoundPage />} />

@@ -2,13 +2,20 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ErrorState } from '../components/ErrorState.jsx'
 import { LoadingScreen } from '../components/LoadingScreen.jsx'
-import { getAttempt, getOrCreateActiveAttempt } from '../services/quizService.js'
+import {
+  getAttempt,
+  getAttemptAnswers,
+  getOrCreateActiveAttempt,
+  getQuestions,
+} from '../services/quizService.js'
+import { buildChapterProgress } from '../utils/chapters.js'
 import { percentageFor } from '../utils/score.js'
 
 export function ResultPage() {
   const { attemptId } = useParams()
   const navigate = useNavigate()
   const [attempt, setAttempt] = useState(null)
+  const [chapters, setChapters] = useState([])
   const [loading, setLoading] = useState(true)
   const [starting, setStarting] = useState(false)
   const [error, setError] = useState('')
@@ -17,9 +24,14 @@ export function ResultPage() {
     setLoading(true)
     setError('')
     try {
-      const result = await getAttempt(attemptId)
+      const [result, questions, answers] = await Promise.all([
+        getAttempt(attemptId),
+        getQuestions(),
+        getAttemptAnswers(attemptId),
+      ])
       if (!result || result.status !== 'completed') throw new Error('This result is not ready yet.')
       setAttempt(result)
+      setChapters(buildChapterProgress(questions, answers))
     } catch (loadError) {
       setError(loadError.message)
     } finally {
@@ -35,7 +47,7 @@ export function ResultPage() {
     setStarting(true)
     try {
       const newAttempt = await getOrCreateActiveAttempt()
-      navigate(`/quiz/${newAttempt.id}`)
+      navigate(`/quiz/${newAttempt.id}/chapter/1`)
     } catch (startError) {
       setError(startError.message)
       setStarting(false)
@@ -69,9 +81,30 @@ export function ResultPage() {
         </span>
       </div>
 
+      <section className="result-chapters" aria-labelledby="chapter-results-heading">
+        <div className="result-section-heading">
+          <span className="eyebrow">Your learning path</span>
+          <h2 id="chapter-results-heading">Chapter results</h2>
+        </div>
+        <div className="chapter-result-grid">
+          {chapters.map((chapter) => (
+            <button
+              className="chapter-result-card"
+              key={chapter.number}
+              onClick={() => navigate(`/quiz/${attemptId}/chapter/${chapter.number}/complete`)}
+            >
+              <span>Chapter {chapter.number}</span>
+              <strong>{chapter.name}</strong>
+              <small>{chapter.score}/{chapter.total} correct · {percentageFor(chapter.score, chapter.total)}%</small>
+              <span className="chapter-result-arrow" aria-hidden="true">→</span>
+            </button>
+          ))}
+        </div>
+      </section>
+
       {error && <p className="inline-error" role="alert">{error}</p>}
       <div className="result-actions">
-        <button className="button primary-button" onClick={handleRetake} disabled={starting}>{starting ? 'Starting…' : 'Retake quiz'}</button>
+        <button className="button primary-button" onClick={handleRetake} disabled={starting}>{starting ? 'Starting…' : 'Retake all chapters'}</button>
         <button className="button secondary-button" onClick={() => navigate('/dashboard')}>View attempt history</button>
       </div>
     </section>

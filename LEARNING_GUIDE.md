@@ -105,7 +105,7 @@ Quiz data is not global context because only the quiz page needs it. Keeping sta
 
 ## 7. Routing builds screens from the URL
 
-`App.jsx` declares routes. `:attemptId` is a URL parameter, comparable to a path parameter in `go_router`. `ProtectedRoute` redirects to the name page until the session/profile is ready.
+`App.jsx` declares routes. `:attemptId` and `:chapterNumber` are URL parameters, comparable to path parameters in `go_router`. The chapter number lets the same `QuizPage` component render five different sections. `ProtectedRoute` redirects to the name page until the session/profile is ready.
 
 Vercel serves one `index.html`, so `vercel.json` rewrites deep links back to that file and lets React Router choose the screen.
 
